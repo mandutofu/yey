@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>경제 기초 교육 시뮬레이션 게임</title>
+    <title>우간다 경제 시뮬레이션 게임</title>
     <style>
         body {
             background-color: #ffffcc;
@@ -20,14 +20,15 @@
 </head>
 <body>
     <div id="game-container">
-        <h1>경제 기초 교육 시뮬레이션 게임</h1>
-        <h2 id="asset">현재 자산: 1000 달러</h2>
+        <h1>우간다 경제 시뮬레이션 게임</h1>
+        <h2 id="asset">현재 자산: 100,000 셜링</h2>
         <h3>구매 가능한 상품 목록:</h3>
         <ul id="products">
-            <li>사과 - 10 달러</li>
-            <li>바나나 - 5 달러</li>
-            <li>오렌지 - 8 달러</li>
-            <li>소 - 50 달러</li>
+            <li>쌀 - 2,000 셜링</li>
+            <li>콩 - 1,500 셜링</li>
+            <li>양파 - 1,200 셜링</li>
+            <li>유정란 - 800 셜링</li>
+            <li>소 - 50,000 셜링</li>
         </ul>
         <div>
             <input type="text" id="product-input" placeholder="상품을 선택하세요" />
@@ -48,12 +49,13 @@
 
     <script>
         // 초기 변수 설정
-        var currentAsset = 1000;
+        var currentAsset = 100000;
         var products = {
-            '사과': 10,
-            '바나나': 5,
-            '오렌지': 8,
-            '소': 50
+            '쌀': 2000,
+            '콩': 1500,
+            '양파': 1200,
+            '유정란': 800,
+            '소': 50000
         };
         var inventory = {};
         var transactionCount = 0;
@@ -71,7 +73,7 @@
         var resultElement = document.getElementById('result');
 
         // 초기 자산 표시
-        assetElement.textContent = '현재 자산: ' + currentAsset + ' 달러';
+        assetElement.textContent = '현재 자산: ' + currentAsset + ' 셜링';
 
         // 구매 버튼 클릭 시
         buyBtn.addEventListener('click', function () {
@@ -92,7 +94,7 @@
                 resultElement.textContent = '유효한 상품을 선택하세요.';
             }
 
-            assetElement.textContent = '현재 자산: ' + currentAsset + ' 달러';
+            assetElement.textContent = '현재 자산: ' + currentAsset + ' 셜링';
         });
 
         // 판매 버튼 클릭 시
@@ -116,12 +118,12 @@
                 resultElement.textContent = '보유한 상품 중 유효한 상품을 선택하세요.';
             }
 
-            assetElement.textContent = '현재 자산: ' + currentAsset + ' 달러';
+            assetElement.textContent = '현재 자산: ' + currentAsset + ' 셜링';
         });
 
         // 자산 확인 버튼 클릭 시
         checkAssetBtn.addEventListener('click', function () {
-            var assetMessage = '현재 자산: ' + currentAsset + ' 달러';
+            var assetMessage = '현재 자산: ' + currentAsset + ' 셜링';
 
             if (Object.keys(inventory).length > 0) {
                 assetMessage += '\n보유한 상품 목록:\n';
@@ -138,11 +140,12 @@
         simulateMarketBtn.addEventListener('click', function () {
             resultElement.textContent = '시장 변동을 시뮬레이션 중입니다...';
 
-            for (var product in products) {
-                var priceChange = getRandomInt(-3, 3);
-                var newPrice = products[product] + priceChange;
-                products[product] = Math.max(newPrice, 1); // 가격이 1 달러 미만으로 내려가지 않도록 보장
-            }
+            // 가격 변동 설정
+            products['쌀'] = 2200;
+            products['콩'] = 1700;
+            products['양파'] = 1400;
+            products['유정란'] = 900;
+            products['소'] = 55000;
 
             updateProductPrices();
         });
@@ -153,7 +156,7 @@
 
             for (var product in products) {
                 var listItem = document.createElement('li');
-                listItem.textContent = product + ' - ' + products[product] + ' 달러';
+                listItem.textContent = product + ' - ' + products[product] + ' 셜링';
                 productsList.appendChild(listItem);
             }
         }
@@ -167,13 +170,6 @@
                 listItem.textContent = product + ': ' + inventory[product] + ' 개';
                 inventoryList.appendChild(listItem);
             }
-        }
-
-        // 랜덤 정수 반환
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     </script>
 </body>
